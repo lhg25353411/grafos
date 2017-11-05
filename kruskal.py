@@ -1,16 +1,15 @@
+import networkx as nx
 parent = dict()
 rank = dict()
 
-def make_set(vertice):
+def criar_conjunto(vertice):
     parent[vertice] = vertice
     rank[vertice] = 0
 
-def find(vertice):
+def procurar(vertice):
     v = vertice
     while parent[vertice] != vertice:
         vertice = parent[vertice]
-        print("vertice = " + vertice)
-        print(parent)
     parent[v] = parent[vertice]
     return parent[vertice]
 
@@ -21,29 +20,39 @@ def find2(vertice):
         parent[vertice] = find(parent[vertice])
     return parent[vertice]
 
-def union(vertice1, vertice2):
-    root1 = find(vertice1)
-    root2 = find(vertice2)
-    if root1 != root2:
-        if rank[root1] > rank[root2]:
-            parent[root2] = root1
+def uniao(vertice1, vertice2):
+    raiz1 = procurar(vertice1)
+    raiz2 = procurar(vertice2)
+    if raiz1 != raiz2:
+        if rank[raiz1] > rank[raiz2]:
+            parent[raiz2] = raiz1
         else:
-            parent[root1] = root2
-            if rank[root1] == rank[root2]: rank[root2] += 1
+            parent[raiz1] = raiz2
+            if rank[raiz1] == rank[raiz2]: rank[raiz2] += 1
 
-def kruskal(graph):
-    for vertice in graph['vertices']:
-        make_set(vertice)
+def kruskal(grafo):
+    #cria um dicionário com todos os vertices do grafo
+    lista_de_vertice = list(grafo.nodes())
+    for vertice in lista_de_vertice:
+        criar_conjunto(vertice)
+    #cria a arvore geradora minima
+    mst = nx.Graph()
+    arestas = list(grafo.edges.data('weight'))
+    arestas.sort(key = lambda x: x[2])
+    for aresta in arestas:
+        vertice1, vertice2, weight = aresta
+        if procurar(vertice1) != procurar(vertice2):
+            uniao(vertice1, vertice2)
+            mst.add_edge(aresta[0], aresta[1], weigth = aresta[2])
+    return mst
 
-    minimum_spanning_tree = set()
-    edges = list(graph['edges'])
-    edges.sort()
-    for edge in edges:
-        weight, vertice1, vertice2 = edge
-        if find(vertice1) != find(vertice2):
-            union(vertice1, vertice2)
-            minimum_spanning_tree.add(edge)
-    return minimum_spanning_tree
+
+
+
+
+
+#####################################################
+
 
 graph = {
         'vertices': ['A', 'B', 'C', 'D', 'E', 'F'],
@@ -61,4 +70,23 @@ minimum_spanning_tree = set([
             (2, 'B', 'D'),
             (1, 'C', 'D'),
             ])
-assert kruskal(graph) == minimum_spanning_tree
+grafo = nx.Graph()
+grafo.add_nodes_from(['A', 'B', 'C', 'D', 'E', 'F'])
+grafo.add_edges_from([
+                            ('A', 'B', {'weight': 1}), 
+                            ('A', 'C', {'weight': 5}), 
+                            ('A', 'D', {'weight': 3}),
+                            ('B', 'C', {'weight': 4}),  
+                            ('B', 'D', {'weight': 2}), 
+                            ('C', 'D', {'weight': 1}), 
+                            ])
+arvore_minima = nx.Graph()
+arvore_minima.add_nodes_from((['A', 'B', 'C', 'D']))
+arvore_minima.add_edges_from([
+                            ('A', 'B', {'weight': 1}), 
+                            ('B', 'D', {'weight': 2}), 
+                            ('C', 'D', {'weight': 1}),
+                            ])
+#assert kruskal(grafo) == arvore_minima
+print(kruskal(grafo).edges())
+print(arvore_minima.edges())
