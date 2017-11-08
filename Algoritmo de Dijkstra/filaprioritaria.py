@@ -2,8 +2,11 @@
 class PriorityQueue:
 
     def __init__(self):
-        self.fila = [0]
+        self.fila = [(0,0)]
         self.tamanho = 0
+
+    def getTamanho(self):
+        return self.tamanho
 
     def find_min(self):
         if self.tamanho != 0:
@@ -13,6 +16,7 @@ class PriorityQueue:
         minimo = self.find_min()
         self.fila[1] = self.fila[self.tamanho]
         self.tamanho = self.tamanho-1
+        self.fila.pop()
         self.fix_down(1)
         return minimo
 
@@ -22,12 +26,15 @@ class PriorityQueue:
         self.fix_up(self.tamanho)
 
     def increase_key(self, indice, valor):
-        self.fila[indice] = valor
-        self.fix_up(indice)
+        for i in self.fila:
+            if indice == i[0] :
+                self.fila[i][0] = valor
+                self.fix_up(i)
+                break
 
-    def decrease_key(self, indice, valor):
-        self.fila[indice] = valor
-        self.fix_down(indice)
+    #def decrease_key(self, node, valor):
+    #    self.fila[node]['distance'] = valor
+    #    self.fix_down(node)
 
     def __contains__(self, elemento):
         for pair in self.fila:
@@ -41,9 +48,9 @@ class PriorityQueue:
 
         while 2*i <= self.tamanho:
             f = 2*i
-            if f < self.tamanho and self.fila[f] > self.fila[f+1]:
+            if f < self.tamanho and self.fila[f][0] > self.fila[f+1][0]:
                 f = f+1
-            if self.fila[i] <= self.fila[f]:
+            if self.fila[i][0] <= self.fila[f][0]:
                 i = self.tamanho
             else:
                 aux = self.fila[f]
@@ -52,7 +59,7 @@ class PriorityQueue:
                 i = f
 
     def build_min_heap(self, lista):
-        self.fila = [0]
+        self.fila = [(0,0)]
         self.tamanho = len(lista)
         for i in lista:
             self.fila.append(i)
@@ -63,7 +70,7 @@ class PriorityQueue:
             i -= 1
 
     def fix_up(self, i):
-        while i >= 2 and self.fila[i//2] > self.fila[i]:
+        while i >= 2 and self.fila[i//2][0] > self.fila[i][0]:
             aux = self.fila[i//2]
             self.fila[i//2] = self.fila[i]
             self.fila[i] = aux
