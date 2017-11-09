@@ -1,3 +1,6 @@
+#File name: filaprioritaria.py
+
+#Author: Luis Carlos <luiscarlos.sf@outlook.com>
 
 class PriorityQueue:
 
@@ -25,12 +28,14 @@ class PriorityQueue:
         self.tamanho = self.tamanho+1
         self.fix_up(self.tamanho)
 
-    def increase_key(self, indice, valor):
+    def increase_key(self, node, valor):
+        cont=0
         for i in self.fila:
-            if indice == i[0] :
-                self.fila[i][0] = valor
-                self.fix_up(i)
+            if node == i[1] :
+                self.fila[cont] = (valor, node)
+                self.fix_up(cont)
                 break
+            cont+=1
 
     #def decrease_key(self, node, valor):
     #    self.fila[node]['distance'] = valor
@@ -63,7 +68,6 @@ class PriorityQueue:
         self.tamanho = len(lista)
         for i in lista:
             self.fila.append(i)
-
         i = len(lista)//2
         while i >= 1:
             self.fix_down(i)
