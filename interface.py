@@ -4,6 +4,7 @@ from matriz import in_mat as mat
 #import dijkstra-algorithm as dj
 from kruskal import Algoritimo_kruskal as kr
 from prim_graph import Graph as prim
+import dijkstraalgorithm 
 
 
 
@@ -202,24 +203,32 @@ class Application:
     #Método chama Prim
     def chamaPrim(self):
         self.mensagem["text"] = ("O escolhido foi Prim!")
-        self.p.V = len(self.list_adj) #é esperado que volte o tamanha da lista, ou seja, a quantidade de vertices
-        self.p.graph = self.list_adj
+        self.p.V = self.G.number_of_nodes()
+        self.p.graph = self.m.get_matriz_adj()
+
+        self.m.mat_clear()
+
         self.p.primMST()
         
         
-        
+        self.m.mat_clear()  
         
     #Método chama Kruskal
     def chamaKruskal(self):
         self.mensagem["text"] = ("O escolhido foi Kruskal!")
         
-        mst = k.kruskal(self.G)
+        mst = self.k.kruskal(self.G)
         print(mst.edges)
-        print(k.peso(mst))
+        print(self.k.peso(mst))
         
-        
+        self.m.mat_clear()  
     #Método chama Dijkstra
-    def chamaDijkstra(self):
+    def chamaDijkstra(self) :
+        H = nx.DiGraph(self.G)
+        v1 = int(input("Digite o vertice de oferta: "))
+        v2 = int(input("Digite o vertice de demanda: "))
+        print(dijkstraalgorithm.dijkstra(H,v1,v2))
+        """
         self.mensagem["text"] = ("O escolhido foi Dijkstra!")
         
         n = int(input("Digite o vértice fonte: "))
@@ -235,7 +244,8 @@ class Application:
         else:
             print("Não existe nenhum vértice com essa definição")
 
-        
+        self.m.mat_clear()
+        """
     #Método chama Geracao dos Grafos
     def chamaGerar(self):
         self.mensagem["text"] = ("O escolhido foi gerar automaticamente!")
@@ -245,8 +255,10 @@ class Application:
         #G contém um grafo gerado automáticamente
         self.m = mat()
         self.m.random_g()
-        self.G = m.to_graph()
-        self.list_adj = m.get_matriz_adj()        
+        self.G = self.m.to_graph()
+        self.list_adj = self.m.get_matriz_adj()
+        
+
     #Método chama Insercao de Vértice do Grafo por Matrix
     def chamaInserirVert(self):
         self.mensagem["text"] = ("O escolhido foi inserir manualmente!")
@@ -258,6 +270,7 @@ class Application:
         self.m.to_mat()
         self.G = m.to_graph()
         self.list_adj = m.get_matriz_adj()
+        
     
     #Método chama Insercao da Matriz
     def chamaInserirMatriz(self):
