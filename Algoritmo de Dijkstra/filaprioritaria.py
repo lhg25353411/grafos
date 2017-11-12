@@ -37,10 +37,6 @@ class PriorityQueue:
                 break
             cont+=1
 
-    #def decrease_key(self, node, valor):
-    #    self.fila[node]['distance'] = valor
-    #    self.fix_down(node)
-
     def __contains__(self, elemento):
         for pair in self.fila:
             if pair == elemento:
