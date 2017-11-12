@@ -261,7 +261,6 @@ class Application:
 
     #Método chama Insercao de Vértice do Grafo por Matrix
     def chamaInserirVert(self):
-        self.mensagem["text"] = ("O escolhido foi inserir manualmente!")
         """
         global vertices
         vertices = int(self.vertice.get())
@@ -271,6 +270,19 @@ class Application:
         self.G = m.to_graph()
         self.list_adj = m.get_matriz_adj()
         
+        """FUNCAO CORRIGIDA PARA INSERIR VERTICES"""
+        
+        self.vertices = int(self.vertice.get())
+        self.mensagem["text"] = ("O escolhido foi inserir manualmente!")
+        self.mx = []
+        self.elemento_atual = 0
+        self.msg_matriz["text"] = ("Insira", self.vertices**2, "elementos!")
+
+        for vertice in range(self.vertices):
+            self.mx.extend([[None] * self.vertices])
+
+        print(self.mx)
+        
     
     #Método chama Insercao da Matriz
     def chamaInserirMatriz(self):
@@ -278,16 +290,13 @@ class Application:
         m = mat()
         m.to_mat()
         G = m.to_graph
-        """for i in range(vertices):
-            print(i)
-            tmp = []
-            for j in range(vertices):
-                print(j)
-                element = self.matriz.get()
-                tmp.append(element)
-                self.msg_matriz["text"] = ("Continue inserindo!")
-        mx.append(tmp[:])
-        print(mx)"""
+        
+        """FUNCAO CORRIGIDA PARA INSERIR MATRIZ"""
+        elemento = int(self.matriz.get())
+        self.mx[self.elemento_atual // self.vertices][self.elemento_atual % self.vertices] = elemento
+        self.elemento_atual += 1
+
+        print(self.mx)
             
 root = Tk()
 root.geometry('800x600')
