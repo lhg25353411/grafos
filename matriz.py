@@ -33,7 +33,9 @@ class in_mat():
                     if int(self.matriz[x][y]) > 0:
                         n = int(self.matriz[x][y])
                         G.add_edge (x,y,weight = n)
-        self.matriz.clear()
+                        
+        #self.matriz.clear()
+        
         return G
 
     #Gera aleatoriamente um grafo a partir de um numero de vertices
@@ -58,6 +60,8 @@ class in_mat():
             self.matriz[v2][v1] = n
             #atribuição do peso no grafo
             G.edges[v1,v2]['weight']=n
+            
+        self.quant_vert = G.number_of_nodes()
         
         #G.edges[v1,v2]['weight']=n
         return G
@@ -69,8 +73,33 @@ class in_mat():
     def mat_clear(self):
         self.quant_vert = 0 
         self.matriz = []
+    
+    #função que gera um grafo completo    
+    def graph_comp(self):
+        v = int(input("Digite a quantidade de vertices para gerar um grafo completo: "))
+        G = nx.complete_graph(v)
         
+        self.quant_vert = G.number_of_nodes()
+        
+        a = G.edges()
+        
+        self.matriz = []
+        for i in range(v):
+            self.matriz.append([0]*v)
             
+        for v1,v2 in a:
+            n = randint(1,50)
+            self.matriz[v1][v2] = n
+            self.matriz[v2][v1] = n
+            #atribuição do peso no grafo
+            G.edges[v1,v2]['weight']=n
+        
+        return G
+            
+            
+        
+        
+        
         """
         self.quant_vert = randint(1,self.max_vert)
         list_aux = []
