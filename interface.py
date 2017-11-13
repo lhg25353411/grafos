@@ -5,6 +5,7 @@ from matriz import in_mat as mat
 from kruskal import Algoritimo_kruskal as kr
 from prim_graph import Graph as prim
 import dijkstraalgorithm 
+import matplotlib.pyplot as plt
 
 
 
@@ -242,12 +243,17 @@ class Application:
         self.p.V = self.G.number_of_nodes()
         self.p.graph = self.m.get_matriz_adj()
 
-        self.m.mat_clear()
+        #self.m.mat_clear()
 
-        self.p.primMST()
+        self.G = self.p.primMST()
         
+        plt.figure(figsize=(8,8))
+        nx.draw(self.G,node_size=5,alpha=1,node_color="black", edge_color = "#1880C7", with_labels=False)
+        plt.axis('equal')
+        plt.savefig('circular_tree.png')
+        plt.show()
         
-        self.m.mat_clear()  
+        #self.m.mat_clear()  
         #teste
         print(self.vertice)
         
@@ -258,6 +264,12 @@ class Application:
         mst = self.k.kruskal(self.G)
         print(mst.edges)
         print(self.k.peso(mst))
+        
+        plt.figure(figsize=(8,8))
+        nx.draw(mst,node_size=5,alpha=1,node_color="black", edge_color = "#1880C7", with_labels=False)
+        plt.axis('equal')
+        plt.savefig('circular_tree.png')
+        plt.show()
         
         self.m.mat_clear()  
     #Método chama Dijkstra
@@ -279,6 +291,12 @@ class Application:
         self.G = self.m.to_graph()
         self.list_adj = self.m.get_matriz_adj()
         
+        plt.figure(figsize=(8,8))
+        nx.draw(self.G,node_size=5,alpha=1,node_color="black", edge_color = "#1880C7", with_labels=False)
+        plt.axis('equal')
+        plt.savefig('circular_tree.png')
+        plt.show()
+        
 
     #Método chama Insercao de Vértice do Grafo por Matrix
     def chamaInserirVert(self):
@@ -290,6 +308,7 @@ class Application:
         
         #limpar os atributos da classe para reutilização
         self.m.mat_clear()
+        self.G.clear()
         
         #conseguir o valor digitado pelo usuario no campo "Nº de vértices"
         #print(self.vertice.get())
@@ -332,6 +351,14 @@ class Application:
         
         self.G = self.m.to_graph()
         self.list_adj = self.m.get_matriz_adj()
+<<<<<<< HEAD
+        
+        plt.figure(figsize=(8,8))
+        nx.draw(self.G,node_size=5,alpha=1,node_color="black", edge_color = "#1880C7", with_labels=False)
+        plt.axis('equal')
+        plt.savefig('circular_tree.png')
+        plt.show()
+=======
         """for i in range(vertices):
             print(i)
             tmp = []
@@ -354,6 +381,7 @@ class Application:
         self.elemento_atual += 1
 
         print(self.mx)
+>>>>>>> 9eaa2dcb8f9f4517b33f87d2b9d650768f4fda7f
             
 root = Tk()
 root.geometry('800x600')

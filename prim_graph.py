@@ -1,4 +1,5 @@
 import sys
+import networkx as nx
 
 class Graph():
     
@@ -6,11 +7,14 @@ class Graph():
         self.V = 0
         self.graph = [] #inicializa a matriz de adjacencia vazia
         
+        
     # Funcao para imprimir a arvore geradora minima
     def printMST(self, parent):
-        print("\nArestas \tPeso")
+        mst = nx.Graph()
         for i in range(1,self.V):
-            print(parent[i],"-",i,"\t",self.graph[i][ parent[i] ])
+            mst.add_edge(parent[i], i,  weight = self.graph[i][ parent[i] ])
+        return mst    
+
             
     #Funcao para encontrar o vertice com distancia minima
     def minKey(self, key, mstSet): 
@@ -48,7 +52,8 @@ class Graph():
                    key[v] > self.graph[u][v]):
                         key[v] = self.graph[u][v]
                         parent[v] = u
-        self.printMST(parent)
+                        
+        return self.printMST(parent)
         
 # entrada do numero de vertices
 """        
