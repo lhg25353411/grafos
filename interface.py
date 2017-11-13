@@ -118,6 +118,21 @@ class Application:
         self.verticeContainer["padx"] = 20
         self.verticeContainer.pack()
         
+        
+        #######################
+        
+        self.dijk_v_fonteContainer = Frame(master)
+        self.dijk_v_fonteContainer["padx"] = 20
+        self.dijk_v_fonteContainer.pack()
+
+        #####################
+        
+        self.dijk_v_destinoContainer = Frame(master)
+        self.dijk_v_destinoContainer["padx"] = 20
+        self.dijk_v_destinoContainer.pack()
+        
+        ######################
+        
         self.space3 = Frame(master)
         self.space3["padx"] = 20
         self.space3.pack()
@@ -188,6 +203,27 @@ class Application:
         self.matriz["font"] = self.fontePadrao
         self.matriz.pack(side=BOTTOM)
         
+        ###############################
+        self.dijk_v_fonteLabel = Label(self.dijk_v_fonteContainer,text="Dijkstra - Vertice Fonte: ", font=self.fontePadrao)
+        self.dijk_v_fonteLabel.pack(side=TOP)
+
+        self.dijk_v_fonte = Entry(self.dijk_v_fonteContainer)
+        self.dijk_v_fonte["width"] = 30
+        self.dijk_v_fonte["font"] = self.fontePadrao
+        self.dijk_v_fonte.pack(side=BOTTOM)
+        
+      
+        ##########################
+        self.dijk_v_destinoLabel = Label(self.dijk_v_destinoContainer,text="Dijkstra - Vertice Destino: ", font=self.fontePadrao)
+        self.dijk_v_destinoLabel.pack(side=TOP)
+
+        self.dijk_v_destino = Entry(self.dijk_v_fonteContainer)
+        self.dijk_v_destino["width"] = 30
+        self.dijk_v_destino["font"] = self.fontePadrao
+        self.dijk_v_destino.pack(side=BOTTOM)
+        ##########################
+        
+        
         self.mzContainer = Frame(master)
         self.mzContainer["padx"] = 20
         self.mzContainer.pack()
@@ -212,6 +248,8 @@ class Application:
         
         
         self.m.mat_clear()  
+        #teste
+        print(self.vertice)
         
     #Método chama Kruskal
     def chamaKruskal(self):
@@ -225,33 +263,17 @@ class Application:
     #Método chama Dijkstra
     def chamaDijkstra(self) :
         H = nx.DiGraph(self.G)
-        v1 = int(input("Digite o vertice de oferta: "))
-        v2 = int(input("Digite o vertice de demanda: "))
+        v1 = int(self.dijk_v_destino.get())
+        v2 = int(self.dijk_v_fonte.get())
         print(dijkstraalgorithm.dijkstra(H,v1,v2))
-        """
-        self.mensagem["text"] = ("O escolhido foi Dijkstra!")
-        
-        n = int(input("Digite o vértice fonte: "))
-        try:
-            fonte = int(n)
-        except():
-            pass    
-        
-        if fonte in self.G:
-            print(fonte)
-            custos = dijkstra(self.G,fonte) #lembrar da importação correta
-            print("Distâncias do ",fonte,"para todos os outros vértices:\n",custos)
-        else:
-            print("Não existe nenhum vértice com essa definição")
-
-        self.m.mat_clear()
-        """
+      
     #Método chama Geracao dos Grafos
     def chamaGerar(self):
         self.mensagem["text"] = ("O escolhido foi gerar automaticamente!")
         """
         É necessário obter a matriz automaticamente bem como obter a matriz de adj que será usada no algoritmo de prim
         """
+        
         #G contém um grafo gerado automáticamente
         self.m = mat()
         self.m.random_g()
@@ -261,23 +283,44 @@ class Application:
 
     #Método chama Insercao de Vértice do Grafo por Matrix
     def chamaInserirVert(self):
-        self.mensagem["text"] = ("O escolhido foi inserir manualmente!")
+        self.mensagem["text"] = ("Número de vértices definido: ")
         """
         global vertices
         vertices = int(self.vertice.get())
         """
         self.m = mat()
-        self.m.to_mat()
-        self.G = m.to_graph()
-        self.list_adj = m.get_matriz_adj()
+        
+        #limpar os atributos da classe para reutilização
+        self.m.mat_clear()
+        
+        #conseguir o valor digitado pelo usuario no campo "Nº de vértices"
+        #print(self.vertice.get())
+        self.m.quant_vert = int(self.vertice.get())
+        print(self.m.quant_vert)
         
     
     #Método chama Insercao da Matriz
     def chamaInserirMatriz(self):
-        mx = []
-        m = mat()
-        m.to_mat()
-        G = m.to_graph
+        
+        #A matriz agora sera lida de um arquivo
+        ref_arq_mat = open(self.matriz.get(),'r')
+        
+        for linha in ref_arq_mat:
+            valores = linha.split()
+            self.m.matriz.append(valores)    
+            
+        #trasnforma caracter da lista em int
+        for i in range(0,len(self.m.matriz)):
+            self.m.matriz[i]=[int(elem) for elem in self.m.matriz[i]]  
+
+        ref_arq_mat.close()
+        
+        #self.m.to_mat()
+        
+        print(self.m.matriz)
+        
+        self.G = self.m.to_graph()
+        self.list_adj = self.m.get_matriz_adj()
         """for i in range(vertices):
             print(i)
             tmp = []
