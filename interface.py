@@ -85,7 +85,7 @@ class Application:
         self.setimoContainer["pady"] = 10
         self.setimoContainer.pack()
                 
-        self.titulo = Label(self.setimoContainer, text="Você quer gerar grafos automáticos ou inserir manualmente?")
+        self.titulo = Label(self.setimoContainer, text="Voce quer gerar grafos automaticos ou inserir manualmente?")
         self.titulo["font"] = ("Arial", "10", "bold")
         self.titulo.pack()
         
@@ -145,7 +145,7 @@ class Application:
         self.inserirContainer.pack()
         
         self.inserir = Button(self.inserirContainer)
-        self.inserir["text"] = "Salva Nº Vértices"
+        self.inserir["text"] = "Salva N Vertices"
         self.inserir["font"] = ("Calibri", "8")
         self.inserir["width"] = 12
         self.inserir["command"] = self.chamaInserirVert
@@ -187,7 +187,7 @@ class Application:
         self.space6 = Label(self.space6, text="", font=self.fontePadrao)
         self.space6.pack()
         
-        self.verticeLabel = Label(self.verticeContainer,text="N° de vértices: ", font=self.fontePadrao)
+        self.verticeLabel = Label(self.verticeContainer,text="N de vertices: ", font=self.fontePadrao)
         self.verticeLabel.pack(side=TOP)
 
         self.vertice = Entry(self.verticeContainer)
@@ -236,9 +236,9 @@ class Application:
         self.list_adj = []
         """
     
-    #Método chama Prim
+    #Metodo chama Prim
     def chamaPrim(self):
-        self.mensagem["text"] = ("O escolhido foi Prim!")
+        self.mensagem["text"] = ("O escolhido foi Prim")
         self.p.V = self.G.number_of_nodes()
         self.p.graph = self.m.get_matriz_adj()
 
@@ -251,7 +251,7 @@ class Application:
         #teste
         print(self.vertice)
         
-    #Método chama Kruskal
+    #Metodo chama Kruskal
     def chamaKruskal(self):
         self.mensagem["text"] = ("O escolhido foi Kruskal!")
         
@@ -260,40 +260,40 @@ class Application:
         print(self.k.peso(mst))
         
         self.m.mat_clear()  
-    #Método chama Dijkstra
+    #Metodo chama Dijkstra
     def chamaDijkstra(self) :
         H = nx.DiGraph(self.G)
         v1 = int(self.dijk_v_destino.get())
         v2 = int(self.dijk_v_fonte.get())
         print(dijkstraalgorithm.dijkstra(H,v1,v2))
       
-    #Método chama Geracao dos Grafos
+    #Metodo chama Geracao dos Grafos
     def chamaGerar(self):
-        self.mensagem["text"] = ("O escolhido foi gerar automaticamente!")
+        self.mensagem["text"] = ("O escolhido foi gerar automaticamente")
         """
-        É necessário obter a matriz automaticamente bem como obter a matriz de adj que será usada no algoritmo de prim
+        Eh necessario obter a matriz automaticamente bem como obter a matriz de adj que sera usada no algoritmo de prim
         """
         
-        #G contém um grafo gerado automáticamente
+        #G contem um grafo gerado automaticamente
         self.m.random_g()
         self.G = self.m.to_graph()
         self.list_adj = self.m.get_matriz_adj()
         
 
-    #Método chama Insercao de Vértice do Grafo por Matrix
+    #Metodo chama Insercao de Vertice do Grafo por Matrix
     def chamaInserirVert(self):
 
-        self.mensagem["text"] = ("Número de vértices definido: ")
+        self.mensagem["text"] = ("Numero de vertices definido: ")
   
         """
         global vertices
         vertices = int(self.vertice.get())
         """
         
-        #limpar os atributos da classe para reutilização
+        #limpar os atributos da classe para reutilizacao
         self.m.mat_clear()
         
-        #conseguir o valor digitado pelo usuario no campo "Nº de vértices"
+        #conseguir o valor digitado pelo usuario no campo "N de vertices"
         #print(self.vertice.get())
         self.m.quant_vert = int(self.vertice.get())
         print(self.m.quant_vert)
@@ -301,10 +301,10 @@ class Application:
         """FUNCAO CORRIGIDA PARA INSERIR VERTICES"""
         
         self.vertices = int(self.vertice.get())
-        self.mensagem["text"] = ("O escolhido foi inserir manualmente!")
+        self.mensagem["text"] = ("O escolhido foi inserir manualmente")
         self.mx = []
         self.elemento_atual = 0
-        self.msg_matriz["text"] = ("Insira", self.vertices**2, "elementos!")
+        self.msg_matriz["text"] = ("Insira", self.vertices**2, "elementos")
 
         for vertice in range(self.vertices):
             self.mx.extend([[None] * self.vertices])
@@ -312,7 +312,7 @@ class Application:
         print(self.mx)
         
     
-    #Método chama Insercao da Matriz
+    #Metodo chama Insercao da Matriz
     def chamaInserirMatriz(self):
         
         #A matriz agora sera lida de um arquivo
