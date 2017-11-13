@@ -296,6 +296,19 @@ class Application:
         self.m.quant_vert = int(self.vertice.get())
         print(self.m.quant_vert)
         
+        """FUNCAO CORRIGIDA PARA INSERIR VERTICES"""
+        
+        self.vertices = int(self.vertice.get())
+        self.mensagem["text"] = ("O escolhido foi inserir manualmente!")
+        self.mx = []
+        self.elemento_atual = 0
+        self.msg_matriz["text"] = ("Insira", self.vertices**2, "elementos!")
+
+        for vertice in range(self.vertices):
+            self.mx.extend([[None] * self.vertices])
+
+        print(self.mx)
+        
     
     #Método chama Insercao da Matriz
     def chamaInserirMatriz(self):
@@ -329,6 +342,18 @@ class Application:
                 self.msg_matriz["text"] = ("Continue inserindo!")
         mx.append(tmp[:])
         print(mx)"""
+        
+        mx = []
+        m = mat()
+        m.to_mat()
+        G = m.to_graph
+        
+        """FUNCAO CORRIGIDA PARA INSERIR MATRIZ"""
+        elemento = int(self.matriz.get())
+        self.mx[self.elemento_atual // self.vertices][self.elemento_atual % self.vertices] = elemento
+        self.elemento_atual += 1
+
+        print(self.mx)
             
 root = Tk()
 root.geometry('800x600')
