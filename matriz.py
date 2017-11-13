@@ -105,19 +105,7 @@ class in_mat():
             
             
         
-        
-        
-        """
-        self.quant_vert = randint(1,self.max_vert)
-        list_aux = []
-        #n = randint(1,self.quant_vert)
-        for x in range(0,self.quant_vert):
-            for y in range(0,self.quant_vert):
-                list_aux.append(randint(0,self.max_arest))
-            print(list_aux)    
-            self.matriz.append(list_aux)
-            list_aux.clear()
-            """
+    
        
         
                 

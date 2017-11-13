@@ -275,7 +275,6 @@ class Application:
         """
         
         #G contém um grafo gerado automáticamente
-        self.m = mat()
         self.m.random_g()
         self.G = self.m.to_graph()
         self.list_adj = self.m.get_matriz_adj()
@@ -288,7 +287,6 @@ class Application:
         global vertices
         vertices = int(self.vertice.get())
         """
-        self.m = mat()
         
         #limpar os atributos da classe para reutilização
         self.m.mat_clear()
