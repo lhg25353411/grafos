@@ -43,7 +43,7 @@ class in_mat():
     def random_g(self): 
         #n é o numero de vertices
         n = int(input("Digite a quantidade de vertices para gerar um grafo: "))
-        G = nx.connected_watts_strogatz_graph(n,randint(int(n/2),n-1),1,100,randint(1,100))
+        G = nx.connected_watts_strogatz_graph(n,randint(int(n/2),n-1),0.5,100,randint(1,100))
         
         # a é uma lista contendo as arestas do grafo
         a = G.edges()
